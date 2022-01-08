@@ -10,7 +10,7 @@ $('#submitCityInput').on('click', function(event) {
         userInputCity = userInputCity.charAt(0).toUpperCase() + userInputCity.substr(1)
     }
     if (userInputCity.includes(" ")) {
-        var userInputCityArray = userInputCity.split(" ")  //taken from https://www.freecodecamp.org/news/how-to-capitalize-words-in-javascript/
+        var userInputCityArray = userInputCity.split(" ")
         for(let i = 0; i < userInputCityArray.length; i++) {
             userInputCityArray[i] = userInputCityArray[i][0].toUpperCase() 
             + userInputCityArray[i].substr(1);
