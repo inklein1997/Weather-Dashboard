@@ -17,17 +17,20 @@ function addPreviousSearchButton() {
     var divEl = $('<div>').addClass("hstack gap-3").attr('id','previous-search').on('click','#delete-button',function(event) {
         event.preventDefault()
         $(event.target).parent().remove()
-    }).on('click',"[data-value]",function(event) {
+        userInputCity = $(event.target).attr("data-value")
+        previousSearches.splice(previousSearches.indexOf(userInputCity,1))
+    }).on('click',"#city-button",function(event) {
         event.preventDefault();
+        console.log("click!")
         resetData();
         userInputCity = $(event.target).attr("data-value");
         pullCoordinates();
     })
     $('#previousSearchList').append(divEl
         .append(
-            $('<button>').addClass("btn btn-primary container-fluid").attr("data-value", userInputCity).text(userInputCity),
+            $('<button>').addClass("btn btn-primary container-fluid").attr('id','city-button').attr("data-value", userInputCity).text(userInputCity),
             $('<div>').addClass("vr"),
-            $('<button>').addClass("btn btn-outline-danger").attr('id','delete-button').text("Delete")
+            $('<button>').addClass("btn btn-outline-danger").attr('id','delete-button').attr("data-value", userInputCity).text("Delete")
         )
     )
 }
@@ -93,7 +96,7 @@ function pullWeather(longitude, latitude) {
 // var sectionEl = ('section')
 function displayData() {
     var divEl = $('<div>')
-    .addClass("col border mb-3")
+    .addClass("col border mb-3 rounded")
     .append($('<h2>').text(userInputCity),
         "<img src=http://openweathermap.org/img/wn/"+weatherData[0].icon+"@2x.png>",
         $('<h2>').text("Current Temperature: " + weatherData[0].temp),
@@ -105,7 +108,7 @@ function displayData() {
     var divEl1 = $('<div>').addClass("row gap-3")
     console.log(weatherData[1].temp)
     for (var i = 1; i <= 5; i++) {
-        divEl1.append($('<div>').addClass("col bg-primary")
+        divEl1.append($('<div>').addClass("col bg-primary rounded")
         .append("<img src=http://openweathermap.org/img/wn/"+weatherData[i].icon+".png>",
         $('<h5>').text("Temp min: " + weatherData[i].temp.min),
         $('<h5>').text("Temp max: " + weatherData[i].temp.max),
