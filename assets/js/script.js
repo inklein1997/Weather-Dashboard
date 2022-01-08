@@ -12,7 +12,10 @@ $('#submitCityInput').on('click', function(event) {
 })
 
 function addPreviousSearchButton() {
-    $('#previousSearchList').append($('<div>').addClass("hstack gap-3").attr('id','previous-search')
+    var divEl = $('<div>').addClass("hstack gap-3").attr('id','previous-search').on('click','#delete-button',function(event) {
+        $(event.target).parent().remove()
+    })
+    $('#previousSearchList').append(divEl
         .append(
             $('<button>').addClass("btn btn-primary container-fluid").text(userInputCity),
             $('<div>').addClass("vr"),
@@ -27,10 +30,6 @@ function resetData() {
     weatherData= []
     currentWeatherData=""
 }
-
-$('#previous-search').on('click', '#delete-button' ,function(event) {
-    $(event.target).parent().remove()
-})
 
 function pullCoordinates() {
     var requestUrlLocation = 'https://api.openweathermap.org/data/2.5/weather?q='+userInputCity+'&appid=9d7ebf8b022f99c1559d4339ab5c60ee'
