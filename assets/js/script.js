@@ -1,44 +1,44 @@
-var userInputCity;
-var previousSearches = [];
-var weatherData = [];
+var userInputCity;          //stores users city input
+var previousSearches = [];  //search history
+var weatherData = [];       //weather data API call results
 
-$('#submitCityInput').on('click', function(event) {
+$('#submitCityInput').on('click', function(event) {     //form submission
     event.preventDefault()
-    resetData();
-    userInputCity = $('#cityInput').val();
+    resetData();    //clears userInputCity and weather vars
+    userInputCity = $('#cityInput').val();      //returns value of what user inputted to variable
     if (userInputCity) {
-        userInputCity = userInputCity.charAt(0).toUpperCase() + userInputCity.substr(1)
+        userInputCity = userInputCity.charAt(0).toUpperCase() + userInputCity.substr(1)     //converts first letter to uppercase
     }
-    if (userInputCity.includes(" ")) {
+    if (userInputCity.includes(" ")) {  
         var userInputCityArray = userInputCity.split(" ")
         for(let i = 0; i < userInputCityArray.length; i++) {
             userInputCityArray[i] = userInputCityArray[i][0].toUpperCase() 
             + userInputCityArray[i].substr(1);
         }
-        userInputCity = userInputCityArray.join(" ")
+        userInputCity = userInputCityArray.join(" ")    //if input is more than 1 word, first letter of each word is made uppercase
     }
-    pullCoordinates();
-    $('#cityInput').val('');
+    pullCoordinates();  //begins API call
+    $('#cityInput').val('');    //clears input field on screen after API call
 })
 
-function addPreviousSearchButton() {
+function addPreviousSearchButton() {    //function appends previous search history buttons to page
     if (previousSearches.includes(userInputCity) === true) {
-        return;
+        return;                         //prevents duplicates cities from being added to history
     }
-    previousSearches.push(userInputCity)
-    var divEl = $('<div>').addClass("hstack gap-3").attr('id','previous-search').on('click','#delete-button',function(event) {
+    previousSearches.push(userInputCity)//if search is new, then add value to previousSearch array
+    var divEl = $('<div>').addClass("hstack gap-3").attr('id','previous-search')
+    .on('click','#delete-button',function(event) { //DELETE BUTTON event delegation--adds event listener to button before appending
         event.preventDefault()
         $(event.target).parent().remove()
-        userInputCity = $(event.target).attr("data-value")
-        previousSearches.splice(previousSearches.indexOf(userInputCity,1))
-    }).on('click',"#city-button",function(event) {
+        userInputCity = $(event.target).attr("data-value")  //utilizing data attribute storage
+        previousSearches.splice(previousSearches.indexOf(userInputCity,1))  //removes search from previousSearch array
+    }).on('click',"#city-button",function(event) { //CITY BUTTON event delegation--adds event listener to button before appending
         event.preventDefault();
-        console.log("click!")
-        resetData();
-        userInputCity = $(event.target).attr("data-value");
-        pullCoordinates();
+        resetData();        //clears vars so a new call can store new info
+        userInputCity = $(event.target).attr("data-value"); //utilizing data attribute storage
+        pullCoordinates();  //API call to city clicked
     })
-    $('#previousSearchList').append(divEl
+    $('#previousSearchList').append(divEl   //appends buttons to search history
         .append(
             $('<button>').addClass("btn btn-primary container-fluid").attr('id','city-button').attr("data-value", userInputCity).text(userInputCity),
             $('<div>').addClass("vr"),
@@ -48,39 +48,39 @@ function addPreviousSearchButton() {
 }
 
 function resetData() {
-    $('section').empty();
+    $('section').empty();   //removes all previous weather display
     userInputCity="";
     weatherData= []
     currentWeatherData=""
 }
 
 function pullCoordinates() {
-    var requestUrlLocation = 'https://api.openweathermap.org/data/2.5/weather?q='+userInputCity+'&appid=9d7ebf8b022f99c1559d4339ab5c60ee'
+    var requestUrlLocation = 'https://api.openweathermap.org/data/2.5/weather?q='+userInputCity+'&appid=9d7ebf8b022f99c1559d4339ab5c60ee'   //includes city input from user and api key -- fetch data to get latitude and longitude of input location 
     fetch(requestUrlLocation)
     .then(function(response) {
-        if (response.status !== 200) {
+        if (response.status !== 200) {      //if search is not successful alert the user
             alert(userInputCity + " is not a valid city name.  Please enter a valid city name.");
             return
         }
-        return response.json()
+        return response.json()      //converts data to JSON
     }).then(function(data) {
         console.log(data);
-        var longitude = data.coord.lon
-        var latitude = data.coord.lat
+        var longitude = data.coord.lon      //record longitude of location
+        var latitude = data.coord.lat       //record latitude of location
         console.log("longitude: " + longitude)
         console.log("latitude: " + latitude)
-        pullWeather(longitude, latitude);
+        pullWeather(longitude, latitude);   //API call using longitude and latitude
     })  
 }
 
 function pullWeather(longitude, latitude) {
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&units=imperial&appid=9d7ebf8b022f99c1559d4339ab5c60ee'
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&units=imperial&appid=9d7ebf8b022f99c1559d4339ab5c60ee'     //includes longitude and latitude, units for measurements, and apikey
     fetch(weatherUrl)
     .then(function(response) {
         return response.json()
     }).then(function(data) {
         console.log(data)
-        var currentWeatherData = {
+        var currentWeatherData = {                  //object that parses needed data from JSON data
             weather: data.current.weather[0].main,
             icon: data.current.weather[0].icon,
             temp: data.current.temp,
@@ -88,9 +88,9 @@ function pullWeather(longitude, latitude) {
             humidity: data.current.humidity,
             uvindex: data.current.uvi,
         }
-        weatherData.push(currentWeatherData)
+        weatherData.push(currentWeatherData)        //pushes object to currentWeatherData array
         console.log(currentWeatherData)
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < 5; i++) {                //iterates through multiple days for future weather data
             var futureWeatherData = {
                 weather: data.daily[i].weather[0].main,
                 icon: data.daily[i].weather[0].icon,
@@ -98,11 +98,11 @@ function pullWeather(longitude, latitude) {
                 wind: data.daily[i].wind_speed,
                 humidity: data.daily[i].humidity,
             }
-            weatherData.push(futureWeatherData)
+            weatherData.push(futureWeatherData)     //pushes object to currentWeatherData array
         }
         console.log(weatherData)
-        displayData()
-        addPreviousSearchButton();
+        displayData()       //displays data to page
+        addPreviousSearchButton();      //adds previous search buttons
     }) 
 }
 // var sectionEl = ('section')
@@ -121,7 +121,7 @@ function displayData() {
     )
     $('section').append(divEl);
 
-    uvIndexColor()
+    uvIndexColor()  //changes the color of the uvindex depending on its value
 
     var divEl1 = $('<div>').addClass("d-flex flex-wrap gap-3 text-white")
     console.log(weatherData[1].temp)
