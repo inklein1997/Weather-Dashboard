@@ -6,6 +6,7 @@ $('#submitCityInput').on('click', function(event) {
     event.preventDefault()
     resetData();
     userInputCity = $('#cityInput').val();
+    $('#cityInput').val('')
     pullCoordinates();
 })
 
