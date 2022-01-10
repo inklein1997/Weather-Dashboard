@@ -8,6 +8,19 @@ $('#submitCityInput').on('click', function(event) {     //form submission
     event.preventDefault()
     resetData();    //clears userInputCity and weather vars
     userInputCity = $('#cityInput').val();      //returns value of what user inputted to variable
+    submitCity()
+})
+
+displayForPageLoad();
+function displayForPageLoad() {
+    if(previousSearches.length >= 1) {
+    renderPreviousSearches()
+    userInputCity = previousSearches[0]
+    submitCity()
+    }
+}
+
+function submitCity() {
     if (userInputCity) {
         userInputCity = userInputCity.charAt(0).toUpperCase() + userInputCity.substr(1)     //converts first letter to uppercase
     }
@@ -21,9 +34,8 @@ $('#submitCityInput').on('click', function(event) {     //form submission
     }
     pullCoordinates();  //begins API call
     $('#cityInput').val('');    //clears input field on screen after API call
-})
+}
 
-renderPreviousSearches()
 function renderPreviousSearches() {
     if (previousSearches != []) {
         console.log("there are saved searches")
@@ -53,9 +65,6 @@ function renderPreviousSearches() {
         }
     }
 }
-
-
-
 
 function addPreviousSearchButton() {    //function appends previous search history buttons to page
     if (previousSearches.includes(userInputCity) === true) {
