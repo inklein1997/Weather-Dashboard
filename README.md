@@ -18,13 +18,20 @@ Goals for this project include the following:
 - ### [URL to Github Repository](https://github.com/inklein1997/Weather-Dashboard)
 
 ## Technologies
-- Server Side APIs
-- jQuery
-- Bootstrap
-- MomentJS
+### Languages and Libraries
+![JavaScript Logo](./assets/images/javascript.png)
+![HTML5 Logo](./assets/images/html5.png)
+![CSS3 Logo](./assets/images/css3.png)
+![jQuery Logo](./assets/images/jquery-logo.png)
+
+### 3rd Party APIs
+[![Bootstrap Logo](./assets/images/bootstrap-logo.png)](https://getbootstrap.com/)
+[![OpenWeatherMap Logo](./assets/images/open-weather-map-logo.png)](https://openweathermap.org/api)
+[![MomentJS Logo](./assets/images/momentJS-logo.png)](https://momentjs.com/)
+
+
+### Miscellaneou Technologies
 - Local Storage
-- HTML5
-- CSS3
 
 ## Screenshot of Webpage
 ![desktop screenshot of application](./assets/images/application-screenshot-desktop-view.jpg/)
