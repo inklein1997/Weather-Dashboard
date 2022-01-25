@@ -29,9 +29,8 @@ Goals for this project include the following:
 
 ### 3rd Party APIs
 [![Bootstrap Logo](./assets/images/Bootstrap-logo.png)](https://getbootstrap.com/)
-[![OpenWeatherMap Logo](./assets/images/open-weather-map-logo.png)](https://openweathermap.org/api)
 [![MomentJS Logo](./assets/images/momentJS-logo.png)](https://momentjs.com/)
-
+[![OpenWeatherMap Logo](./assets/images/open-weather-map-logo.png)](https://openweathermap.org/api)
 
 ### Miscellaneou Technologies
 - Local Storage
