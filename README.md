@@ -10,6 +10,7 @@
 - [License](#License)
 - [Contribution](#Contribution)
 - [Acknowledgements](#Acknowledgements)
+- [Questions](#Questions)
 
 ## Project Goal
 Goals for this project include the following: 
@@ -57,4 +58,11 @@ Here's how you can contribute...
 
 ## Acknowledgements
 - Weather APIs provided by [https://openweathermap.org/](https://openweathermap.org/api).
-- Special thanks to Catalin Pit for code for that capitalized the first letter of multiple words.  See [here](https://www.freecodecamp.org/news/how-to-capitalize-words-in-javascript/).
+- Special thanks to Catalin Pit for code that capitalized the first letter of multiple words.  See [here](https://www.freecodecamp.org/news/how-to-capitalize-words-in-javascript/).
+
+## Questions
+If you have any questions, please contact me via:
+1. GitHub -- [@inklein1997](https://github.com/inklein1997)
+2. Email -- michaelklein1997@gmail.com
+
+[^1]: Code of Conduct provided by [Contributor Covenant](https://www.contributor-covenant.org/)
